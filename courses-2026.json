@@ -1,13 +1,22 @@
 {
   "year": 2026,
-  "title": { "de": "KI & Security Lernpfad", "en": "AI & Security Learning Path" },
-  "subtitle": { "de": "8 Stunden · LinkedIn Learning · Badges sammeln", "en": "8 Hours · LinkedIn Learning · Collect Badges" },
+  "title": {
+    "de": "KI & Security Lernpfad 2026",
+    "en": "AI & Security Learning Path 2026"
+  },
+  "subtitle": {
+    "de": "8 Stunden · LinkedIn Learning · Badges sammeln",
+    "en": "8 Hours · LinkedIn Learning · Collect Badges"
+  },
   "source": "LinkedIn Course List 2026",
   "blocks": [
     {
       "id": "block1",
       "icon": "📘",
-      "title": { "de": "Block 1: KI-Grundlagen", "en": "Block 1: AI Fundamentals" },
+      "title": {
+        "de": "Block 1: KI-Grundlagen",
+        "en": "Block 1: AI Fundamentals"
+      },
       "courses": [
         {
           "id": "1",
@@ -44,7 +53,10 @@
     {
       "id": "block2",
       "icon": "🔌",
-      "title": { "de": "Block 2: KI + APIs – Daten lesen über Schnittstellen", "en": "Block 2: AI + APIs – Reading Data via Interfaces" },
+      "title": {
+        "de": "Block 2: KI + APIs – Daten lesen über Schnittstellen",
+        "en": "Block 2: AI + APIs – Reading Data via Interfaces"
+      },
       "courses": [
         {
           "id": "4",
@@ -61,13 +73,16 @@
     {
       "id": "block3",
       "icon": "🔒",
-      "title": { "de": "Block 3: API & KI Security", "en": "Block 3: API & AI Security" },
+      "title": {
+        "de": "Block 3: API & KI Security",
+        "en": "Block 3: API & AI Security"
+      },
       "courses": [
         {
           "id": "5",
           "title": "The OWASP API 2023 Top 10: An Overview",
           "duration": "0h 42min",
-          "hours": 0.70,
+          "hours": 0.7,
           "level": "Intermediate",
           "excelRow": 357,
           "platform": "LinkedIn Learning",
