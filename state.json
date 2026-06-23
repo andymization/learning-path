@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T09:52:41.093Z",
+  "updatedAt": "2026-06-23T09:53:28.029Z",
   "courses": {
     "1": {
       "completedAt": "2026-06-11T12:00:00.000Z",
@@ -7,7 +7,7 @@
     },
     "2": {
       "completedAt": "2026-06-15T12:00:00.000Z",
-      "cert": null
+      "cert": "https://www.linkedin.com/learning/certificates/add56b473b853ea5201bda08eddd5e57a7f9e6e3e0d831869e23c6693cd9840b?trk=share_certificate"
     },
     "3": {
       "completedAt": "2026-06-22T09:00:00.000Z",
