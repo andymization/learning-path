@@ -14,11 +14,12 @@
         .progress-fill { background: linear-gradient(90deg, #00c853, #69f0ae); height: 100%; border-radius: 12px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0a1628; font-size: 0.85rem; }
         .stats { display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.9rem; color: #8ab4f8; }
         .block-title { font-size: 1.2rem; color: #69f0ae; margin: 2rem 0 1rem; padding-left: 0.5rem; border-left: 4px solid #69f0ae; }
-        .course-card { background: #152238; border: 1px solid #2d4a6f; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; transition: all 0.3s ease; }
+        .course-card { background: #152238; border: 1px solid #2d4a6f; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; transition: all 0.3s ease; }
         .course-card:hover { border-color: #8ab4f8; transform: translateX(4px); }
         .course-card.done { border-color: #00c853; background: #0d2818; }
         .course-card.done .course-title { text-decoration: line-through; color: #69f0ae; }
         .course-card.done .badge { opacity: 1; }
+        .course-row { display: flex; align-items: center; gap: 1rem; }
         .checkbox { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #5a7a9f; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .course-card.done .checkbox { background: #00c853; border-color: #00c853; }
         .course-card.done .checkbox::after { content: '\2713'; color: #fff; font-weight: bold; font-size: 1rem; }
@@ -29,6 +30,16 @@
         .course-link { background: linear-gradient(135deg, #0077b5, #005e93); color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; transition: all 0.3s; }
         .course-link:hover { background: linear-gradient(135deg, #0088cc, #0077b5); transform: scale(1.05); }
         .badge { font-size: 1.3rem; opacity: 0.2; transition: opacity 0.3s; }
+        .proof-section { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid #2d4a6f; font-size: 0.8rem; }
+        .proof-date { color: #69f0ae; margin-bottom: 0.3rem; }
+        .proof-cert { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .proof-cert a { color: #8ab4f8; text-decoration: underline; word-break: break-all; }
+        .proof-cert a:hover { color: #fff; }
+        .cert-input-row { display: flex; gap: 0.5rem; margin-top: 0.4rem; align-items: center; flex-wrap: wrap; }
+        .cert-input { background: #1e3a5f; border: 1px solid #2d4a6f; color: #fff; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.75rem; flex: 1; min-width: 200px; }
+        .cert-save-btn { background: #0077b5; color: #fff; border: none; padding: 0.3rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 600; }
+        .cert-save-btn:hover { background: #0088cc; }
+        .platform-badge { display: inline-block; background: #0077b5; color: #fff; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; }
         .sync-bar { display: flex; justify-content: center; align-items: center; gap: 0.8rem; margin: 1rem 0; flex-wrap: wrap; }
         .sync-status { font-size: 0.8rem; color: #8ab4f8; text-align: center; }
         .sync-status.success { color: #69f0ae; }
@@ -40,8 +51,8 @@
         .confetti { display: none; text-align: center; font-size: 2rem; margin: 1rem 0; }
         .confetti.show { display: block; animation: bounce 0.5s ease; }
         @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        .readonly-badge { background: #ff9800; color: #000; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
         .last-update { font-size: 0.75rem; color: #5a7a9f; text-align: center; margin-top: 0.5rem; }
+        .legend { text-align: center; margin: 1rem 0; padding: 0.8rem; background: #152238; border-radius: 8px; border: 1px solid #2d4a6f; font-size: 0.8rem; color: #8ab4f8; }
     </style>
 </head>
 <body>
@@ -52,102 +63,130 @@
         <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
         <div class="stats">
             <span id="coursesCompleted">0 von 8 Kursen abgeschlossen</span>
-            <span id="hoursCompleted">0 / 8,13 Stunden</span>
+            <span id="hoursCompleted">0 / 8.13 Stunden</span>
         </div>
         <div class="confetti" id="confetti">🎉🏆🎊 Alle Kurse abgeschlossen! 🎊🏆🎉</div>
 
         <div class="block-title">📘 Block 1: KI-Grundlagen</div>
 
         <div class="course-card" data-hours="1.25" data-id="1">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 1 von 8</div>
-                <div class="course-title">Programming Foundations: Artificial Intelligence</div>
-                <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Beginner</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 1 von 8</div>
+                    <div class="course-title">Programming Foundations: Artificial Intelligence</div>
+                    <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/programming-foundations-artificial-intelligence" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/programming-foundations-artificial-intelligence" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="course-card" data-hours="1.05" data-id="2">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 2 von 8</div>
-                <div class="course-title">Introduction to Prompt Engineering for Generative AI</div>
-                <div class="course-meta"><span>⏱ 1h 03min</span><span>📊 Beginner</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 2 von 8</div>
+                    <div class="course-title">Introduction to Prompt Engineering for Generative AI</div>
+                    <div class="course-meta"><span>⏱ 1h 03min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai-24636124" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai-24636124" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="course-card" data-hours="1.18" data-id="3">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 3 von 8</div>
-                <div class="course-title">Demystifying ChatGPT and Generative AI: What Every Professional Needs to Know</div>
-                <div class="course-meta"><span>⏱ 1h 11min</span><span>📊 Beginner/Intermediate</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 3 von 8</div>
+                    <div class="course-title">Demystifying ChatGPT and Generative AI: What Every Professional Needs to Know</div>
+                    <div class="course-meta"><span>⏱ 1h 11min</span><span>📊 Beginner/Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/demystifying-chatgpt-and-generative-ai-what-every-professional-needs-to-know" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/demystifying-chatgpt-and-generative-ai-what-every-professional-needs-to-know" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="block-title">🔌 Block 2: KI + APIs – Daten lesen über Schnittstellen</div>
 
         <div class="course-card" data-hours="0.98" data-id="4">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 4 von 8</div>
-                <div class="course-title">Hands-On OpenAI API: Building a Real-World Solution</div>
-                <div class="course-meta"><span>⏱ 0h 59min</span><span>📊 Beginner</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 4 von 8</div>
+                    <div class="course-title">Hands-On OpenAI API: Building a Real-World Solution</div>
+                    <div class="course-meta"><span>⏱ 0h 59min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/hands-on-openai-api-building-a-real-world-solution" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/hands-on-openai-api-building-a-real-world-solution" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="block-title">🔒 Block 3: API & KI Security</div>
 
         <div class="course-card" data-hours="0.70" data-id="5">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 5 von 8</div>
-                <div class="course-title">The OWASP API 2023 Top 10: An Overview</div>
-                <div class="course-meta"><span>⏱ 0h 42min</span><span>📊 Intermediate</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 5 von 8</div>
+                    <div class="course-title">The OWASP API 2023 Top 10: An Overview</div>
+                    <div class="course-meta"><span>⏱ 0h 42min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-api-2023-top-10-an-overview" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-api-2023-top-10-an-overview" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="course-card" data-hours="0.85" data-id="6">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 6 von 8</div>
-                <div class="course-title">The OWASP Top 10 for Large Language Model (LLM) Applications: An Overview</div>
-                <div class="course-meta"><span>⏱ 0h 51min</span><span>📊 Intermediate</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 6 von 8</div>
+                    <div class="course-title">The OWASP Top 10 for Large Language Model (LLM) Applications: An Overview</div>
+                    <div class="course-meta"><span>⏱ 0h 51min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-top-10-for-large-language-model-llm-applications-an-overview" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-top-10-for-large-language-model-llm-applications-an-overview" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="course-card" data-hours="0.87" data-id="7">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 7 von 8</div>
-                <div class="course-title">LLM Security: How to Protect Your Generative AI Investments</div>
-                <div class="course-meta"><span>⏱ 0h 52min</span><span>📊 Intermediate</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 7 von 8</div>
+                    <div class="course-title">LLM Security: How to Protect Your Generative AI Investments</div>
+                    <div class="course-meta"><span>⏱ 0h 52min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/llm-security-how-to-protect-your-generative-ai-investments" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/llm-security-how-to-protect-your-generative-ai-investments" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
         </div>
 
         <div class="course-card" data-hours="1.25" data-id="8">
-            <div class="checkbox" onclick="toggleCourse(this)"></div>
-            <div class="course-info">
-                <div class="course-number">Kurs 8 von 8</div>
-                <div class="course-title">Securing the Use of Generative AI in Your Organization</div>
-                <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Intermediate</span></div>
+            <div class="course-row">
+                <div class="checkbox" onclick="toggleCourse(this)"></div>
+                <div class="course-info">
+                    <div class="course-number">Kurs 8 von 8</div>
+                    <div class="course-title">Securing the Use of Generative AI in Your Organization</div>
+                    <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
+                </div>
+                <a class="course-link" href="https://www.linkedin.com/learning/securing-the-use-of-generative-ai-in-your-organization" target="_blank">▶ Starten</a>
+                <div class="badge">🏅</div>
             </div>
-            <a class="course-link" href="https://www.linkedin.com/learning/securing-the-use-of-generative-ai-in-your-organization" target="_blank">▶ Starten</a>
-            <div class="badge">🏅</div>
+            <div class="proof-section" style="display:none"></div>
+        </div>
+
+        <div class="legend">
+            📜 <strong>Nachweis:</strong> Nach Kursabschluss auf LinkedIn → „Zertifikat anzeigen" → URL kopieren und hier einfügen. Dein Kollege sieht Datum + Zertifikats-Link.
         </div>
 
         <div class="sync-bar">
@@ -171,19 +210,31 @@
         const STATE_FILE = 'state.json';
         const TOKEN_KEY = 'lernpfad-gh-token';
         let isOwner = false;
+        let currentState = { courses: {}, updatedAt: null };
 
-        // ─── GitHub: State lesen (öffentlich, kein Token) ───────────
+        // ─── GitHub: State lesen (öffentlich) ────────────────────────
         async function loadState() {
             try {
                 const url = `https://raw.githubusercontent.com/${REPO}/main/${STATE_FILE}?t=${Date.now()}`;
                 const resp = await fetch(url);
-                if (resp.ok) return await resp.json();
+                if (resp.ok) {
+                    const data = await resp.json();
+                    // Migration: altes Format (completed:[]) → neues (courses:{})
+                    if (data.completed && Array.isArray(data.completed)) {
+                        const migrated = { courses: {}, updatedAt: data.updatedAt };
+                        data.completed.forEach(id => {
+                            migrated.courses[id] = { completedAt: data.updatedAt || new Date().toISOString(), cert: null };
+                        });
+                        return migrated;
+                    }
+                    return data;
+                }
             } catch (e) {}
-            return { completed: [], updatedAt: null };
+            return { courses: {}, updatedAt: null };
         }
 
-        // ─── GitHub: State schreiben (braucht Token) ────────────────
-        async function saveState(completed) {
+        // ─── GitHub: State schreiben (braucht Token) ─────────────────
+        async function saveState() {
             const token = localStorage.getItem(TOKEN_KEY);
             if (!token) {
                 document.getElementById('tokenSection').style.display = 'flex';
@@ -193,14 +244,16 @@
 
             try {
                 setStatus('⏳ Speichere...', '');
+                currentState.updatedAt = new Date().toISOString();
+
                 const metaResp = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, {
                     headers: { Authorization: `token ${token}` }
                 });
                 const meta = await metaResp.json();
 
-                const content = JSON.stringify({ completed, updatedAt: new Date().toISOString() }, null, 2);
+                const content = JSON.stringify(currentState, null, 2);
                 const body = {
-                    message: `${completed.length}/8 Kurse erledigt`,
+                    message: `${Object.keys(currentState.courses).length}/8 Kurse erledigt`,
                     content: btoa(unescape(encodeURIComponent(content))),
                     sha: meta.sha
                 };
@@ -213,15 +266,15 @@
 
                 if (writeResp.ok) {
                     setStatus('✅ Gespeichert & synchronisiert – ' + new Date().toLocaleTimeString(), 'success');
-                    showLastUpdate(new Date().toISOString());
+                    showLastUpdate(currentState.updatedAt);
                     return true;
                 } else {
-                    if (writeResp.status === 401) {
+                    if (writeResp.status === 401 || writeResp.status === 403) {
                         localStorage.removeItem(TOKEN_KEY);
                         document.getElementById('tokenSection').style.display = 'flex';
                         setStatus('🔑 Token ungültig – bitte neuen eingeben', 'error');
                     } else {
-                        setStatus('⚠️ Fehler beim Speichern', 'error');
+                        setStatus('⚠️ Fehler beim Speichern (HTTP ' + writeResp.status + ')', 'error');
                     }
                     return false;
                 }
@@ -231,7 +284,7 @@
             }
         }
 
-        // ─── Token ──────────────────────────────────────────────────
+        // ─── Token ───────────────────────────────────────────────────
         function saveToken() {
             const token = document.getElementById('tokenInput').value.trim();
             if (token) {
@@ -241,47 +294,104 @@
                 isOwner = true;
                 enableCheckboxes();
                 setStatus('✅ Verbunden! Du kannst jetzt Kurse abhaken.', 'success');
-                saveState(getCompletedFromDOM());
+                saveState();
             }
         }
 
-        // ─── DOM ────────────────────────────────────────────────────
-        function getCompletedFromDOM() {
-            return [...document.querySelectorAll('.course-card.done')].map(c => c.dataset.id);
+        // ─── Proof Section rendern ───────────────────────────────────
+        function renderProof(card, courseData) {
+            const proofEl = card.querySelector('.proof-section');
+            if (!courseData) {
+                proofEl.style.display = 'none';
+                proofEl.innerHTML = '';
+                return;
+            }
+            proofEl.style.display = 'block';
+            const dateStr = courseData.completedAt ? new Date(courseData.completedAt).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '–';
+
+            let certHtml = '';
+            if (courseData.cert) {
+                certHtml = `<div class="proof-cert">📜 Zertifikat: <a href="${courseData.cert}" target="_blank" rel="noopener">Auf LinkedIn ansehen ↗</a></div>`;
+            } else if (isOwner) {
+                certHtml = `<div class="cert-input-row">
+                    <input type="text" class="cert-input" placeholder="Zertifikats-URL einfügen (linkedin.com/learning/certificates/...)" data-id="${card.dataset.id}">
+                    <button class="cert-save-btn" onclick="saveCert(this)">📜 Speichern</button>
+                </div>`;
+            } else {
+                certHtml = `<div class="proof-cert" style="color:#ff9800">⚠️ Zertifikat noch nicht hinterlegt</div>`;
+            }
+
+            proofEl.innerHTML = `
+                <div class="proof-date">✅ Abgeschlossen am ${dateStr} · <span class="platform-badge">LinkedIn Learning</span></div>
+                ${certHtml}
+            `;
         }
 
-        function applyToDom(completed) {
-            document.querySelectorAll('.course-card').forEach(c => c.classList.remove('done'));
-            (completed || []).forEach(id => {
-                const card = document.querySelector(`[data-id="${id}"]`);
-                if (card) card.classList.add('done');
+        // ─── Zertifikat speichern ────────────────────────────────────
+        async function saveCert(btn) {
+            const input = btn.previousElementSibling;
+            const id = input.dataset.id;
+            const url = input.value.trim();
+            if (!url) return;
+
+            if (!url.startsWith('http')) {
+                input.style.borderColor = '#ff6b6b';
+                return;
+            }
+
+            currentState.courses[id].cert = url;
+            const card = document.querySelector(`[data-id="${id}"]`);
+            renderProof(card, currentState.courses[id]);
+            await saveState();
+        }
+
+        // ─── Toggle Kurs ─────────────────────────────────────────────
+        async function toggleCourse(checkbox) {
+            if (!isOwner) return;
+            const card = checkbox.closest('.course-card');
+            const id = card.dataset.id;
+
+            if (card.classList.contains('done')) {
+                // Kurs rückgängig machen
+                card.classList.remove('done');
+                delete currentState.courses[id];
+                renderProof(card, null);
+            } else {
+                // Kurs abschließen
+                card.classList.add('done');
+                currentState.courses[id] = {
+                    completedAt: new Date().toISOString(),
+                    cert: null
+                };
+                renderProof(card, currentState.courses[id]);
+            }
+            updateStats();
+            await saveState();
+        }
+
+        // ─── DOM aktualisieren ───────────────────────────────────────
+        function applyToDom(state) {
+            document.querySelectorAll('.course-card').forEach(card => {
+                const id = card.dataset.id;
+                const courseData = state.courses[id];
+                if (courseData) {
+                    card.classList.add('done');
+                    renderProof(card, courseData);
+                } else {
+                    card.classList.remove('done');
+                    renderProof(card, null);
+                }
             });
         }
 
         function enableCheckboxes() {
-            document.querySelectorAll('.checkbox').forEach(cb => {
-                cb.style.cursor = 'pointer';
-                cb.style.opacity = '1';
-            });
+            document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'pointer'; cb.style.opacity = '1'; });
         }
-
         function disableCheckboxes() {
-            document.querySelectorAll('.checkbox').forEach(cb => {
-                cb.style.cursor = 'default';
-                cb.style.opacity = '0.5';
-            });
+            document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'default'; cb.style.opacity = '0.5'; });
         }
 
-        // ─── Toggle ─────────────────────────────────────────────────
-        async function toggleCourse(checkbox) {
-            if (!isOwner) return; // Nur der Owner kann abhaken
-            const card = checkbox.closest('.course-card');
-            card.classList.toggle('done');
-            updateStats();
-            await saveState(getCompletedFromDOM());
-        }
-
-        // ─── Stats ──────────────────────────────────────────────────
+        // ─── Stats ───────────────────────────────────────────────────
         function updateStats() {
             const cards = document.querySelectorAll('.course-card');
             const doneCards = document.querySelectorAll('.course-card.done');
@@ -308,21 +418,20 @@
             document.getElementById('lastUpdate').textContent = `Letztes Update: ${d.toLocaleDateString('de-DE')} um ${d.toLocaleTimeString('de-DE')}`;
         }
 
-        // ─── Token aus URL-Hash lesen (#token=ghp_xxx) ──────────────
+        // ─── Token aus URL-Hash lesen (#token=...) ───────────────────
         function getTokenFromHash() {
             const hash = window.location.hash;
             const match = hash.match(/token=([^&]+)/);
             return match ? match[1] : null;
         }
 
-        // ─── Init ───────────────────────────────────────────────────
+        // ─── Init ────────────────────────────────────────────────────
         (async function init() {
-            const state = await loadState();
-            applyToDom(state.completed);
+            currentState = await loadState();
+            applyToDom(currentState);
             updateStats();
-            showLastUpdate(state.updatedAt);
+            showLastUpdate(currentState.updatedAt);
 
-            // Token-Quellen: 1) URL-Hash  2) localStorage
             const hashToken = getTokenFromHash();
             if (hashToken) localStorage.setItem(TOKEN_KEY, hashToken);
             const token = localStorage.getItem(TOKEN_KEY);
@@ -334,8 +443,7 @@
                 setStatus('✅ Verbunden – klicke Kurse zum Abhaken', 'success');
             } else {
                 disableCheckboxes();
-                setStatus(`📋 Ansichtsmodus – ${state.completed.length}/8 Kurse erledigt`, '');
-                document.getElementById('tokenSection').style.display = 'flex';
+                setStatus(`📋 Ansichtsmodus – ${Object.keys(currentState.courses).length}/8 Kurse erledigt`, '');
             }
         })();
     </script>
