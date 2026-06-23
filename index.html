@@ -188,7 +188,7 @@
                         .map(f => f.name.match(/^courses-(\d{4})\.json$/))
                         .filter(m => m)
                         .map(m => parseInt(m[1]))
-                        .sort((a, b) => b - a);
+                        .sort((a, b) => a - b);
                     return years.length ? years : [currentYear];
                 }
             } catch (e) {}
