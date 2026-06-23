@@ -8,22 +8,19 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { overflow-y: scroll; scrollbar-gutter: stable; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%); min-height: 100vh; padding: 2rem; color: #e0e0e0; }
-        .page-wrapper { max-width: 980px; margin: 0 auto; border: 1px solid #2d4a6f; border-radius: 16px; overflow: hidden; background: #0f1e34; min-height: calc(100vh - 4rem); display: flex; flex-direction: column; }
-        .page-layout { display: flex; flex: 1; }
-        .year-sidebar { width: 90px; background: #0a1628; border-right: 1px solid #2d4a6f; padding: 1.5rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; flex-shrink: 0; }
-        .year-sidebar-btn { width: 72px; padding: 0.6rem 0; text-align: center; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: 700; color: #8ab4f8; background: transparent; border: 1px solid transparent; transition: all 0.2s; }
-        .year-sidebar-btn:hover { background: #1e3a5f; border-color: #2d4a6f; }
-        .year-sidebar-btn.active { background: #00c853; color: #0a1628; border-color: #00c853; }
-        .container { padding: 2rem; flex: 1; min-width: 0; }
+        .page-wrapper { max-width: 900px; margin: 0 auto; }
+        .container { padding: 0; }
+        .year-footer { background: #0a1628; border: 1px solid #2d4a6f; border-radius: 10px; padding: 0.8rem 1.5rem; margin-top: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
+        .year-footer-label { color: #5a7a9f; font-size: 0.85rem; margin-right: 0.5rem; }
+        .year-footer-btn { background: transparent; border: 1px solid transparent; color: #8ab4f8; padding: 0.3rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: all 0.2s; }
+        .year-footer-btn:hover { background: #1e3a5f; border-color: #2d4a6f; }
+        .year-footer-btn.active { background: #00c853; color: #0a1628; border-color: #00c853; }
+        .year-footer-sep { color: #2d4a6f; font-size: 1rem; }
         @media (max-width: 768px) {
-            body { padding: 0.5rem; }
-            .page-wrapper { border-radius: 8px; }
-            .page-layout { flex-direction: column; min-height: auto; }
-            .year-sidebar { width: 100%; height: auto; flex-direction: row; justify-content: center; position: sticky; top: 0; z-index: 100; padding: 0.4rem; border-right: none; border-bottom: 1px solid #2d4a6f; gap: 0.5rem; }
-            .container { padding: 1rem; }
+            body { padding: 1rem; }
         }
         @media (max-width: 480px) {
-            .container { padding: 0.8rem 0.5rem; }
+            body { padding: 0.5rem; }
             .course-card { padding: 0.8rem; }
             .course-row { gap: 0.5rem; }
             .course-link { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
@@ -85,10 +82,6 @@
 </head>
 <body>
     <div class="page-wrapper">
-    <div class="page-layout">
-        <nav class="year-sidebar" id="yearSidebar">
-            <div style="font-size: 1.2rem; margin-bottom: 0.3rem;">📅</div>
-        </nav>
         <div class="container">
         <h1>🎓 <span id="pageTitle"></span></h1>
         <p class="subtitle"><span id="pageSubtitle"></span> 🏆</p>
@@ -122,7 +115,7 @@
             <p style="margin-top:0.5rem" id="footer2"></p>
         </div>
     </div><!-- /container -->
-    </div><!-- /page-layout -->
+        <div class="year-footer" id="yearFooter"></div>
     </div><!-- /page-wrapper -->
 
     <script>
@@ -209,12 +202,13 @@
         }
 
         function renderYearNav() {
-            const container = document.getElementById('yearSidebar');
+            const container = document.getElementById('yearFooter');
             const sorted = [...availableYears].sort((a, b) => a - b);
-            container.innerHTML = '<div style="font-size:1.2rem;margin-bottom:0.3rem;">📅</div>' +
-                sorted.map(y =>
-                    `<div class="year-sidebar-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</div>`
-                ).join('');
+            container.innerHTML = '<span class="year-footer-label">📅</span>' +
+                sorted.map((y, i) => {
+                    const btn = `<button class="year-footer-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</button>`;
+                    return (i > 0 ? '<span class="year-footer-sep">|</span>' : '') + btn;
+                }).join('');
         }
 
         async function switchYear(year) {
