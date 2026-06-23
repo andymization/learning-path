@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎓 KI & Security Lernpfad – 8 Stunden</title>
+    <title>🎓 KI & Security Lernpfad</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%); min-height: 100vh; padding: 2rem; color: #e0e0e0; }
         .container { max-width: 900px; margin: 0 auto; }
         h1 { text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
         .subtitle { text-align: center; color: #8ab4f8; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .lang-switch { text-align: center; margin-bottom: 0.5rem; }
+        .lang-btn { background: none; border: 1px solid #2d4a6f; color: #8ab4f8; padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; margin: 0 0.2rem; }
+        .lang-btn.active { background: #0077b5; color: #fff; border-color: #0077b5; }
         .progress-bar { background: #1e3a5f; border-radius: 12px; height: 28px; margin: 1.5rem 0; overflow: hidden; border: 1px solid #2d4a6f; }
         .progress-fill { background: linear-gradient(90deg, #00c853, #69f0ae); height: 100%; border-radius: 12px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0a1628; font-size: 0.85rem; }
         .stats { display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.9rem; color: #8ab4f8; }
@@ -26,7 +29,7 @@
         .course-info { flex: 1; }
         .course-number { font-size: 0.75rem; color: #5a7a9f; margin-bottom: 0.2rem; }
         .course-title { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
-        .course-meta { font-size: 0.8rem; color: #8ab4f8; display: flex; gap: 1rem; }
+        .course-meta { font-size: 0.8rem; color: #8ab4f8; display: flex; gap: 1rem; flex-wrap: wrap; }
         .course-link { background: linear-gradient(135deg, #0077b5, #005e93); color: #fff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; transition: all 0.3s; }
         .course-link:hover { background: linear-gradient(135deg, #0088cc, #0077b5); transform: scale(1.05); }
         .badge { font-size: 1.3rem; opacity: 0.2; transition: opacity 0.3s; }
@@ -35,6 +38,8 @@
         .proof-cert { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
         .proof-cert a { color: #8ab4f8; text-decoration: underline; word-break: break-all; }
         .proof-cert a:hover { color: #fff; }
+        .cert-edit-btn { background: none; border: 1px solid #5a7a9f; color: #8ab4f8; padding: 0.15rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        .cert-edit-btn:hover { border-color: #8ab4f8; color: #fff; }
         .cert-input-row { display: flex; gap: 0.5rem; margin-top: 0.4rem; align-items: center; flex-wrap: wrap; }
         .cert-input { background: #1e3a5f; border: 1px solid #2d4a6f; color: #fff; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.75rem; flex: 1; min-width: 200px; }
         .cert-save-btn { background: #0077b5; color: #fff; border: none; padding: 0.3rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 600; }
@@ -57,27 +62,31 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎓 KI & Security Lernpfad</h1>
-        <p class="subtitle">8 Stunden · LinkedIn Learning · Badges sammeln 🏆</p>
+        <h1>🎓 <span data-i18n="title">KI & Security Lernpfad</span></h1>
+        <p class="subtitle"><span data-i18n="subtitle">8 Stunden · LinkedIn Learning · Badges sammeln</span> 🏆</p>
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLang('de')">🇩🇪 Deutsch</button>
+            <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+        </div>
 
         <div class="progress-bar"><div class="progress-fill" id="progressFill">0%</div></div>
         <div class="stats">
-            <span id="coursesCompleted">0 von 8 Kursen abgeschlossen</span>
-            <span id="hoursCompleted">0 / 8.13 Stunden</span>
+            <span id="coursesCompleted"></span>
+            <span id="hoursCompleted"></span>
         </div>
-        <div class="confetti" id="confetti">🎉🏆🎊 Alle Kurse abgeschlossen! 🎊🏆🎉</div>
+        <div class="confetti" id="confetti">🎉🏆🎊 <span data-i18n="allDone">Alle Kurse abgeschlossen!</span> 🎊🏆🎉</div>
 
-        <div class="block-title">📘 Block 1: KI-Grundlagen</div>
+        <div class="block-title">📘 <span data-i18n="block1">Block 1: KI-Grundlagen</span></div>
 
         <div class="course-card" data-hours="1.25" data-id="1">
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 1 von 8</div>
+                    <div class="course-number">Kurs 1 / 8</div>
                     <div class="course-title">Programming Foundations: Artificial Intelligence</div>
                     <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/programming-foundations-artificial-intelligence" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/programming-foundations-artificial-intelligence" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
@@ -87,11 +96,11 @@
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 2 von 8</div>
+                    <div class="course-number">Kurs 2 / 8</div>
                     <div class="course-title">Introduction to Prompt Engineering for Generative AI</div>
                     <div class="course-meta"><span>⏱ 1h 03min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai-24636124" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai-24636124" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
@@ -101,43 +110,43 @@
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 3 von 8</div>
+                    <div class="course-number">Kurs 3 / 8</div>
                     <div class="course-title">Demystifying ChatGPT and Generative AI: What Every Professional Needs to Know</div>
                     <div class="course-meta"><span>⏱ 1h 11min</span><span>📊 Beginner/Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/demystifying-chatgpt-and-generative-ai-what-every-professional-needs-to-know" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/demystifying-chatgpt-and-generative-ai-what-every-professional-needs-to-know" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
         </div>
 
-        <div class="block-title">🔌 Block 2: KI + APIs – Daten lesen über Schnittstellen</div>
+        <div class="block-title">🔌 <span data-i18n="block2">Block 2: KI + APIs – Daten lesen über Schnittstellen</span></div>
 
         <div class="course-card" data-hours="0.98" data-id="4">
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 4 von 8</div>
+                    <div class="course-number">Kurs 4 / 8</div>
                     <div class="course-title">Hands-On OpenAI API: Building a Real-World Solution</div>
                     <div class="course-meta"><span>⏱ 0h 59min</span><span>📊 Beginner</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/hands-on-openai-api-building-a-real-world-solution" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/hands-on-openai-api-building-a-real-world-solution" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
         </div>
 
-        <div class="block-title">🔒 Block 3: API & KI Security</div>
+        <div class="block-title">🔒 <span data-i18n="block3">Block 3: API & KI Security</span></div>
 
         <div class="course-card" data-hours="0.70" data-id="5">
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 5 von 8</div>
+                    <div class="course-number">Kurs 5 / 8</div>
                     <div class="course-title">The OWASP API 2023 Top 10: An Overview</div>
                     <div class="course-meta"><span>⏱ 0h 42min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-api-2023-top-10-an-overview" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-api-2023-top-10-an-overview" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
@@ -147,11 +156,11 @@
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 6 von 8</div>
+                    <div class="course-number">Kurs 6 / 8</div>
                     <div class="course-title">The OWASP Top 10 for Large Language Model (LLM) Applications: An Overview</div>
                     <div class="course-meta"><span>⏱ 0h 51min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-top-10-for-large-language-model-llm-applications-an-overview" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/the-owasp-top-10-for-large-language-model-llm-applications-an-overview" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
@@ -161,11 +170,11 @@
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 7 von 8</div>
+                    <div class="course-number">Kurs 7 / 8</div>
                     <div class="course-title">LLM Security: How to Protect Your Generative AI Investments</div>
                     <div class="course-meta"><span>⏱ 0h 52min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/llm-security-how-to-protect-your-generative-ai-investments" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/llm-security-how-to-protect-your-generative-ai-investments" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
@@ -175,36 +184,104 @@
             <div class="course-row">
                 <div class="checkbox" onclick="toggleCourse(this)"></div>
                 <div class="course-info">
-                    <div class="course-number">Kurs 8 von 8</div>
+                    <div class="course-number">Kurs 8 / 8</div>
                     <div class="course-title">Securing the Use of Generative AI in Your Organization</div>
                     <div class="course-meta"><span>⏱ 1h 15min</span><span>📊 Intermediate</span><span class="platform-badge">LinkedIn Learning</span></div>
                 </div>
-                <a class="course-link" href="https://www.linkedin.com/learning/securing-the-use-of-generative-ai-in-your-organization" target="_blank">▶ Starten</a>
+                <a class="course-link" href="https://www.linkedin.com/learning/securing-the-use-of-generative-ai-in-your-organization" target="_blank" data-i18n="start">▶ Starten</a>
                 <div class="badge">🏅</div>
             </div>
             <div class="proof-section" style="display:none"></div>
         </div>
 
-        <div class="legend">
-            📜 <strong>Nachweis:</strong> Nach Kursabschluss auf LinkedIn → „Zertifikat anzeigen" → URL kopieren und hier einfügen. Dein Kollege sieht Datum + Zertifikats-Link.
-        </div>
+        <div class="legend" data-i18n="legend">📜 Nach Kursabschluss auf LinkedIn → „Zertifikat anzeigen" → URL kopieren und hier einfügen. Dein Kollege sieht Datum + Zertifikats-Link.</div>
 
         <div class="sync-bar">
-            <span class="sync-status" id="syncStatus">⏳ Lade...</span>
+            <span class="sync-status" id="syncStatus">⏳ ...</span>
         </div>
         <div class="token-section" id="tokenSection" style="display:none;">
-            <input type="password" class="token-input" id="tokenInput" placeholder="GitHub Token hier einfügen (einmalig)...">
-            <button class="token-btn" onclick="saveToken()">🔓 Freischalten</button>
+            <input type="password" class="token-input" id="tokenInput" placeholder="GitHub Token...">
+            <button class="token-btn" onclick="saveTokenBtn()">🔓 <span data-i18n="unlock">Freischalten</span></button>
         </div>
         <div class="last-update" id="lastUpdate"></div>
 
         <div class="footer">
-            <p>💡 Fortschritt wird zentral gespeichert – dein Kollege sieht deinen Stand hier.</p>
-            <p style="margin-top:0.5rem">Gesamtdauer: 8h 08min · Quelle: LinkedIn Course List 2026</p>
+            <p>💡 <span data-i18n="footer1">Fortschritt wird zentral gespeichert – dein Kollege sieht deinen Stand hier.</span></p>
+            <p style="margin-top:0.5rem"><span data-i18n="footer2">Gesamtdauer: 8h 08min · Quelle: LinkedIn Course List 2026</span></p>
         </div>
     </div>
 
     <script>
+        const i18n = {
+            de: {
+                title: 'KI & Security Lernpfad', subtitle: '8 Stunden · LinkedIn Learning · Badges sammeln',
+                block1: 'Block 1: KI-Grundlagen', block2: 'Block 2: KI + APIs – Daten lesen über Schnittstellen', block3: 'Block 3: API & KI Security',
+                start: '▶ Starten', allDone: 'Alle Kurse abgeschlossen!',
+                legend: '📜 Nach Kursabschluss auf LinkedIn → „Zertifikat anzeigen" → URL kopieren und hier einfügen. Dein Kollege sieht Datum + Zertifikats-Link.',
+                unlock: 'Freischalten',
+                footer1: 'Fortschritt wird zentral gespeichert – dein Kollege sieht deinen Stand hier.',
+                footer2: 'Gesamtdauer: 8h 08min · Quelle: LinkedIn Course List 2026',
+                coursesOf: (d, t) => `${d} von ${t} Kursen abgeschlossen`,
+                hours: (d, t) => `${d} / ${t} Stunden`,
+                completedOn: (dt) => `✅ Abgeschlossen am ${dt}`,
+                certLabel: 'Zertifikat', certView: 'Auf LinkedIn ansehen ↗', certMissing: '⚠️ Zertifikat noch nicht hinterlegt',
+                certPlaceholder: 'Zertifikats-URL einfügen (linkedin.com/learning/certificates/...)',
+                certSave: '📜 Speichern', certEdit: '✏️ Ändern',
+                connected: '✅ Verbunden – klicke Kurse zum Abhaken',
+                viewMode: (n) => `📋 Ansichtsmodus – ${n}/8 Kurse erledigt`,
+                saving: '⏳ Speichere...', saved: (x) => `✅ Gespeichert & synchronisiert – ${x}`,
+                tokenInvalid: '🔑 Token ungültig – bitte neuen eingeben',
+                tokenNeeded: '🔑 Token eingeben um Fortschritt zu speichern',
+                saveError: (c) => `⚠️ Fehler beim Speichern (HTTP ${c})`,
+                connectedMsg: '✅ Verbunden! Du kannst jetzt Kurse abhaken.',
+                loading: '⏳ Lade...', course: 'Kurs', lastUpdate: 'Letztes Update', at: 'um'
+            },
+            en: {
+                title: 'AI & Security Learning Path', subtitle: '8 Hours · LinkedIn Learning · Collect Badges',
+                block1: 'Block 1: AI Fundamentals', block2: 'Block 2: AI + APIs – Reading Data via Interfaces', block3: 'Block 3: API & AI Security',
+                start: '▶ Start', allDone: 'All courses completed!',
+                legend: '📜 After completing a course on LinkedIn → "View Certificate" → copy URL and paste here. Your colleague sees date + certificate link.',
+                unlock: 'Unlock',
+                footer1: 'Progress is stored centrally – your colleague can see your status here.',
+                footer2: 'Total duration: 8h 08min · Source: LinkedIn Course List 2026',
+                coursesOf: (d, t) => `${d} of ${t} courses completed`,
+                hours: (d, t) => `${d} / ${t} hours`,
+                completedOn: (dt) => `✅ Completed on ${dt}`,
+                certLabel: 'Certificate', certView: 'View on LinkedIn ↗', certMissing: '⚠️ Certificate not yet provided',
+                certPlaceholder: 'Paste certificate URL (linkedin.com/learning/certificates/...)',
+                certSave: '📜 Save', certEdit: '✏️ Edit',
+                connected: '✅ Connected – click courses to check off',
+                viewMode: (n) => `📋 View mode – ${n}/8 courses completed`,
+                saving: '⏳ Saving...', saved: (x) => `✅ Saved & synced – ${x}`,
+                tokenInvalid: '🔑 Token invalid – please enter a new one',
+                tokenNeeded: '🔑 Enter token to save progress',
+                saveError: (c) => `⚠️ Error saving (HTTP ${c})`,
+                connectedMsg: '✅ Connected! You can now check off courses.',
+                loading: '⏳ Loading...', course: 'Course', lastUpdate: 'Last update', at: 'at'
+            }
+        };
+
+        let lang = 'de';
+        function t(key, ...args) { const v = i18n[lang][key]; return typeof v === 'function' ? v(...args) : v; }
+
+        function setLang(l) {
+            lang = l;
+            localStorage.setItem('lernpfad-lang', l);
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.includes(l === 'de' ? 'Deutsch' : 'English')));
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (i18n[lang][key] && typeof i18n[lang][key] === 'string') el.textContent = i18n[lang][key];
+            });
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.querySelector('.course-number').textContent = `${t('course')} ${card.dataset.id} / 8`;
+                renderProof(card, currentState.courses[card.dataset.id] || null);
+            });
+            updateStats();
+            showLastUpdate(currentState.updatedAt);
+            if (isOwner) setStatus(t('connected'), 'success');
+            else setStatus(t('viewMode', Object.keys(currentState.courses).length), '');
+        }
+
         const TOTAL_HOURS = 8.13;
         const REPO = 'andymization/lernpfad';
         const STATE_FILE = 'state.json';
@@ -212,35 +289,24 @@
         let isOwner = false;
         let currentState = { courses: {}, updatedAt: null };
 
-        // ─── GitHub: State lesen ─────────────────────────────────────
         async function loadState() {
             try {
                 const token = localStorage.getItem(TOKEN_KEY);
                 let data;
-
                 if (token) {
-                    // Owner: über API lesen (immer aktuell, kein Cache)
                     const resp = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, {
                         headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
                     });
-                    if (resp.ok) {
-                        const meta = await resp.json();
-                        data = JSON.parse(decodeURIComponent(escape(atob(meta.content))));
-                    }
+                    if (resp.ok) { const m = await resp.json(); data = JSON.parse(decodeURIComponent(escape(atob(m.content)))); }
                 } else {
-                    // Kollege: über raw (öffentlich, cached)
                     const resp = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${STATE_FILE}?t=${Date.now()}`);
                     if (resp.ok) data = await resp.json();
                 }
-
                 if (data) {
-                    // Migration: altes Format (completed:[]) → neues (courses:{})
                     if (data.completed && Array.isArray(data.completed)) {
-                        const migrated = { courses: {}, updatedAt: data.updatedAt };
-                        data.completed.forEach(id => {
-                            migrated.courses[id] = { completedAt: data.updatedAt || new Date().toISOString(), cert: null };
-                        });
-                        return migrated;
+                        const m = { courses: {}, updatedAt: data.updatedAt };
+                        data.completed.forEach(id => { m.courses[id] = { completedAt: data.updatedAt || new Date().toISOString(), cert: null }; });
+                        return m;
                     }
                     return data;
                 }
@@ -248,226 +314,140 @@
             return { courses: {}, updatedAt: null };
         }
 
-        // ─── GitHub: State schreiben (braucht Token) ─────────────────
         async function saveState() {
             const token = localStorage.getItem(TOKEN_KEY);
-            if (!token) {
-                document.getElementById('tokenSection').style.display = 'flex';
-                setStatus('🔑 Token eingeben um Fortschritt zu speichern', 'error');
-                return false;
-            }
-
+            if (!token) { document.getElementById('tokenSection').style.display = 'flex'; setStatus(t('tokenNeeded'), 'error'); return false; }
             try {
-                setStatus('⏳ Speichere...', '');
+                setStatus(t('saving'), '');
                 currentState.updatedAt = new Date().toISOString();
-
-                const metaResp = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, {
-                    headers: { Authorization: `token ${token}` }
-                });
+                const metaResp = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, { headers: { Authorization: `token ${token}` } });
                 const meta = await metaResp.json();
-
                 const content = JSON.stringify(currentState, null, 2);
-                const body = {
-                    message: `${Object.keys(currentState.courses).length}/8 Kurse erledigt`,
-                    content: btoa(unescape(encodeURIComponent(content))),
-                    sha: meta.sha
-                };
-
-                const writeResp = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, {
-                    method: 'PUT',
-                    headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+                const body = { message: `${Object.keys(currentState.courses).length}/8 done`, content: btoa(unescape(encodeURIComponent(content))), sha: meta.sha };
+                const wr = await fetch(`https://api.github.com/repos/${REPO}/contents/${STATE_FILE}`, {
+                    method: 'PUT', headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body)
                 });
-
-                if (writeResp.ok) {
-                    setStatus('✅ Gespeichert & synchronisiert – ' + new Date().toLocaleTimeString(), 'success');
-                    showLastUpdate(currentState.updatedAt);
-                    return true;
-                } else {
-                    if (writeResp.status === 401 || writeResp.status === 403) {
-                        localStorage.removeItem(TOKEN_KEY);
-                        document.getElementById('tokenSection').style.display = 'flex';
-                        setStatus('🔑 Token ungültig – bitte neuen eingeben', 'error');
-                    } else {
-                        setStatus('⚠️ Fehler beim Speichern (HTTP ' + writeResp.status + ')', 'error');
-                    }
-                    return false;
-                }
-            } catch (e) {
-                setStatus('⚠️ ' + e.message, 'error');
+                if (wr.ok) { setStatus(t('saved', new Date().toLocaleTimeString()), 'success'); showLastUpdate(currentState.updatedAt); return true; }
+                if (wr.status === 401 || wr.status === 403) { localStorage.removeItem(TOKEN_KEY); document.getElementById('tokenSection').style.display = 'flex'; setStatus(t('tokenInvalid'), 'error'); }
+                else { setStatus(t('saveError', wr.status), 'error'); }
                 return false;
-            }
+            } catch (e) { setStatus('⚠️ ' + e.message, 'error'); return false; }
         }
 
-        // ─── Token ───────────────────────────────────────────────────
-        function saveToken() {
+        function saveTokenBtn() {
             const token = document.getElementById('tokenInput').value.trim();
             if (token) {
                 localStorage.setItem(TOKEN_KEY, token);
                 document.getElementById('tokenSection').style.display = 'none';
                 document.getElementById('tokenInput').value = '';
-                isOwner = true;
-                enableCheckboxes();
-                setStatus('✅ Verbunden! Du kannst jetzt Kurse abhaken.', 'success');
+                isOwner = true; enableCheckboxes();
+                document.querySelectorAll('.course-card').forEach(c => renderProof(c, currentState.courses[c.dataset.id] || null));
+                setStatus(t('connectedMsg'), 'success');
                 saveState();
             }
         }
 
-        // ─── Proof Section rendern ───────────────────────────────────
         function renderProof(card, courseData) {
             const proofEl = card.querySelector('.proof-section');
-            if (!courseData) {
-                proofEl.style.display = 'none';
-                proofEl.innerHTML = '';
-                return;
-            }
+            if (!courseData) { proofEl.style.display = 'none'; proofEl.innerHTML = ''; return; }
             proofEl.style.display = 'block';
-            const dateStr = courseData.completedAt ? new Date(courseData.completedAt).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '–';
-
+            const loc = lang === 'en' ? 'en-US' : 'de-DE';
+            const dateStr = courseData.completedAt ? new Date(courseData.completedAt).toLocaleDateString(loc, { day: '2-digit', month: '2-digit', year: 'numeric' }) : '–';
             let certHtml = '';
             if (courseData.cert) {
-                certHtml = `<div class="proof-cert">📜 Zertifikat: <a href="${courseData.cert}" target="_blank" rel="noopener">Auf LinkedIn ansehen ↗</a></div>`;
+                certHtml = `<div class="proof-cert">📜 ${t('certLabel')}: <a href="${courseData.cert}" target="_blank" rel="noopener">${t('certView')}</a>`;
+                if (isOwner) certHtml += ` <button class="cert-edit-btn" onclick="editCert('${card.dataset.id}')">${t('certEdit')}</button>`;
+                certHtml += `</div>`;
             } else if (isOwner) {
-                certHtml = `<div class="cert-input-row">
-                    <input type="text" class="cert-input" placeholder="Zertifikats-URL einfügen (linkedin.com/learning/certificates/...)" data-id="${card.dataset.id}">
-                    <button class="cert-save-btn" onclick="saveCert(this)">📜 Speichern</button>
-                </div>`;
+                certHtml = `<div class="cert-input-row"><input type="text" class="cert-input" placeholder="${t('certPlaceholder')}" data-id="${card.dataset.id}"><button class="cert-save-btn" onclick="saveCert(this)">${t('certSave')}</button></div>`;
             } else {
-                certHtml = `<div class="proof-cert" style="color:#ff9800">⚠️ Zertifikat noch nicht hinterlegt</div>`;
+                certHtml = `<div class="proof-cert" style="color:#ff9800">${t('certMissing')}</div>`;
             }
-
-            proofEl.innerHTML = `
-                <div class="proof-date">✅ Abgeschlossen am ${dateStr} · <span class="platform-badge">LinkedIn Learning</span></div>
-                ${certHtml}
-            `;
+            proofEl.innerHTML = `<div class="proof-date">${t('completedOn', dateStr)} · <span class="platform-badge">LinkedIn Learning</span></div>${certHtml}`;
         }
 
-        // ─── Zertifikat speichern ────────────────────────────────────
+        function editCert(id) {
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const proofEl = card.querySelector('.proof-section');
+            const existing = currentState.courses[id].cert || '';
+            const loc = lang === 'en' ? 'en-US' : 'de-DE';
+            const dateStr = currentState.courses[id].completedAt ? new Date(currentState.courses[id].completedAt).toLocaleDateString(loc, { day: '2-digit', month: '2-digit', year: 'numeric' }) : '–';
+            proofEl.innerHTML = `<div class="proof-date">${t('completedOn', dateStr)} · <span class="platform-badge">LinkedIn Learning</span></div><div class="cert-input-row"><input type="text" class="cert-input" value="${existing}" data-id="${id}" placeholder="${t('certPlaceholder')}"><button class="cert-save-btn" onclick="saveCert(this)">${t('certSave')}</button></div>`;
+        }
+
         async function saveCert(btn) {
             const input = btn.previousElementSibling;
             const id = input.dataset.id;
             const url = input.value.trim();
             if (!url) return;
-
-            if (!url.startsWith('http')) {
-                input.style.borderColor = '#ff6b6b';
-                return;
-            }
-
+            if (!url.startsWith('http')) { input.style.borderColor = '#ff6b6b'; return; }
             currentState.courses[id].cert = url;
-            const card = document.querySelector(`[data-id="${id}"]`);
-            renderProof(card, currentState.courses[id]);
+            renderProof(document.querySelector(`[data-id="${id}"]`), currentState.courses[id]);
             await saveState();
         }
 
-        // ─── Toggle Kurs ─────────────────────────────────────────────
         async function toggleCourse(checkbox) {
             if (!isOwner) return;
             const card = checkbox.closest('.course-card');
             const id = card.dataset.id;
-
-            if (card.classList.contains('done')) {
-                // Kurs rückgängig machen
-                card.classList.remove('done');
-                delete currentState.courses[id];
-                renderProof(card, null);
-            } else {
-                // Kurs abschließen
-                card.classList.add('done');
-                currentState.courses[id] = {
-                    completedAt: new Date().toISOString(),
-                    cert: null
-                };
-                renderProof(card, currentState.courses[id]);
-            }
+            if (card.classList.contains('done')) { card.classList.remove('done'); delete currentState.courses[id]; renderProof(card, null); }
+            else { card.classList.add('done'); currentState.courses[id] = { completedAt: new Date().toISOString(), cert: null }; renderProof(card, currentState.courses[id]); }
             updateStats();
             await saveState();
         }
 
-        // ─── DOM aktualisieren ───────────────────────────────────────
         function applyToDom(state) {
             document.querySelectorAll('.course-card').forEach(card => {
-                const id = card.dataset.id;
-                const courseData = state.courses[id];
-                if (courseData) {
-                    card.classList.add('done');
-                    renderProof(card, courseData);
-                } else {
-                    card.classList.remove('done');
-                    renderProof(card, null);
-                }
+                const d = state.courses[card.dataset.id];
+                if (d) { card.classList.add('done'); renderProof(card, d); } else { card.classList.remove('done'); renderProof(card, null); }
             });
         }
+        function enableCheckboxes() { document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'pointer'; cb.style.opacity = '1'; }); }
+        function disableCheckboxes() { document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'default'; cb.style.opacity = '0.5'; }); }
 
-        function enableCheckboxes() {
-            document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'pointer'; cb.style.opacity = '1'; });
-        }
-        function disableCheckboxes() {
-            document.querySelectorAll('.checkbox').forEach(cb => { cb.style.cursor = 'default'; cb.style.opacity = '0.5'; });
-        }
-
-        // ─── Stats ───────────────────────────────────────────────────
         function updateStats() {
             const cards = document.querySelectorAll('.course-card');
-            const doneCards = document.querySelectorAll('.course-card.done');
-            let hoursCompleted = 0;
-            doneCards.forEach(card => { hoursCompleted += parseFloat(card.dataset.hours); });
-
-            const percent = Math.round((doneCards.length / cards.length) * 100);
-            document.getElementById('progressFill').style.width = percent + '%';
-            document.getElementById('progressFill').textContent = percent + '%';
-            document.getElementById('coursesCompleted').textContent = `${doneCards.length} von ${cards.length} Kursen abgeschlossen`;
-            document.getElementById('hoursCompleted').textContent = `${hoursCompleted.toFixed(1)} / ${TOTAL_HOURS} Stunden`;
-            document.getElementById('confetti').classList.toggle('show', doneCards.length === cards.length);
+            const done = document.querySelectorAll('.course-card.done');
+            let h = 0; done.forEach(c => h += parseFloat(c.dataset.hours));
+            const pct = Math.round((done.length / cards.length) * 100);
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressFill').textContent = pct + '%';
+            document.getElementById('coursesCompleted').textContent = t('coursesOf', done.length, cards.length);
+            document.getElementById('hoursCompleted').textContent = t('hours', h.toFixed(1), TOTAL_HOURS);
+            document.getElementById('confetti').classList.toggle('show', done.length === cards.length);
         }
 
-        function setStatus(msg, cls) {
-            const el = document.getElementById('syncStatus');
-            el.textContent = msg;
-            el.className = 'sync-status ' + (cls || '');
-        }
+        function setStatus(msg, cls) { const el = document.getElementById('syncStatus'); el.textContent = msg; el.className = 'sync-status ' + (cls || ''); }
 
         function showLastUpdate(dateStr) {
             if (!dateStr) return;
             const d = new Date(dateStr);
-            document.getElementById('lastUpdate').textContent = `Letztes Update: ${d.toLocaleDateString('de-DE')} um ${d.toLocaleTimeString('de-DE')}`;
+            const loc = lang === 'en' ? 'en-US' : 'de-DE';
+            document.getElementById('lastUpdate').textContent = `${t('lastUpdate')}: ${d.toLocaleDateString(loc)} ${t('at')} ${d.toLocaleTimeString(loc)}`;
         }
 
-        // ─── Token aus URL-Hash lesen (#token=...) ───────────────────
-        function getTokenFromHash() {
-            const hash = window.location.hash;
-            const match = hash.match(/token=([^&]+)/);
-            return match ? match[1] : null;
-        }
+        function getTokenFromHash() { const m = window.location.hash.match(/token=([^&]+)/); return m ? m[1] : null; }
 
-        // ─── Init ────────────────────────────────────────────────────
         (async function init() {
-            // Token ZUERST prüfen, damit renderProof weiß ob Owner
+            const savedLang = localStorage.getItem('lernpfad-lang');
+            if (savedLang) lang = savedLang;
+            else lang = (navigator.language || 'de').startsWith('en') ? 'en' : 'de';
+
             const hashToken = getTokenFromHash();
             if (hashToken) localStorage.setItem(TOKEN_KEY, hashToken);
             const token = localStorage.getItem(TOKEN_KEY);
-
-            if (token) {
-                isOwner = true;
-                enableCheckboxes();
-                document.getElementById('tokenSection').style.display = 'none';
-                setStatus('⏳ Lade...', '');
-            } else {
-                disableCheckboxes();
-            }
+            if (token) { isOwner = true; enableCheckboxes(); document.getElementById('tokenSection').style.display = 'none'; setStatus(t('loading'), ''); }
+            else { disableCheckboxes(); }
 
             currentState = await loadState();
+            setLang(lang);
             applyToDom(currentState);
             updateStats();
             showLastUpdate(currentState.updatedAt);
 
-            if (token) {
-                setStatus('✅ Verbunden – klicke Kurse zum Abhaken', 'success');
-            } else {
-                setStatus(`📋 Ansichtsmodus – ${Object.keys(currentState.courses).length}/8 Kurse erledigt`, '');
-            }
+            if (token) setStatus(t('connected'), 'success');
+            else setStatus(t('viewMode', Object.keys(currentState.courses).length), '');
         })();
     </script>
 </body>
 </html>
-
