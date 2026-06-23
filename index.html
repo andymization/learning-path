@@ -204,10 +204,9 @@
         function renderYearNav() {
             const container = document.getElementById('yearFooter');
             const sorted = [...availableYears].sort((a, b) => a - b);
-            container.innerHTML = sorted.map((y, i) => {
-                const btn = `<button class="year-footer-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</button>`;
-                return (i > 0 ? '<span class="year-footer-sep">|</span>' : '') + btn;
-            }).join('');
+            container.innerHTML = sorted.map(y =>
+                `<button class="year-footer-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</button>`
+            ).join('');
         }
 
         async function switchYear(year) {
