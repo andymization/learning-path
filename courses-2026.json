@@ -1,0 +1,109 @@
+{
+  "year": 2026,
+  "title": { "de": "KI & Security Lernpfad", "en": "AI & Security Learning Path" },
+  "subtitle": { "de": "8 Stunden · LinkedIn Learning · Badges sammeln", "en": "8 Hours · LinkedIn Learning · Collect Badges" },
+  "source": "LinkedIn Course List 2026",
+  "blocks": [
+    {
+      "id": "block1",
+      "icon": "📘",
+      "title": { "de": "Block 1: KI-Grundlagen", "en": "Block 1: AI Fundamentals" },
+      "courses": [
+        {
+          "id": "1",
+          "title": "Programming Foundations: Artificial Intelligence",
+          "duration": "1h 15min",
+          "hours": 1.25,
+          "level": "Beginner",
+          "excelRow": 136,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/programming-foundations-artificial-intelligence"
+        },
+        {
+          "id": "2",
+          "title": "Introduction to Prompt Engineering for Generative AI",
+          "duration": "1h 03min",
+          "hours": 1.05,
+          "level": "Beginner",
+          "excelRow": 146,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/introduction-to-prompt-engineering-for-generative-ai-24636124"
+        },
+        {
+          "id": "3",
+          "title": "Demystifying ChatGPT and Generative AI: What Every Professional Needs to Know",
+          "duration": "1h 11min",
+          "hours": 1.18,
+          "level": "Beginner/Intermediate",
+          "excelRow": 56,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/demystifying-chatgpt-and-generative-ai-what-every-professional-needs-to-know"
+        }
+      ]
+    },
+    {
+      "id": "block2",
+      "icon": "🔌",
+      "title": { "de": "Block 2: KI + APIs – Daten lesen über Schnittstellen", "en": "Block 2: AI + APIs – Reading Data via Interfaces" },
+      "courses": [
+        {
+          "id": "4",
+          "title": "Hands-On OpenAI API: Building a Real-World Solution",
+          "duration": "0h 59min",
+          "hours": 0.98,
+          "level": "Beginner",
+          "excelRow": 317,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/hands-on-openai-api-building-a-real-world-solution"
+        }
+      ]
+    },
+    {
+      "id": "block3",
+      "icon": "🔒",
+      "title": { "de": "Block 3: API & KI Security", "en": "Block 3: API & AI Security" },
+      "courses": [
+        {
+          "id": "5",
+          "title": "The OWASP API 2023 Top 10: An Overview",
+          "duration": "0h 42min",
+          "hours": 0.70,
+          "level": "Intermediate",
+          "excelRow": 357,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/the-owasp-api-2023-top-10-an-overview"
+        },
+        {
+          "id": "6",
+          "title": "The OWASP Top 10 for Large Language Model (LLM) Applications: An Overview",
+          "duration": "0h 51min",
+          "hours": 0.85,
+          "level": "Intermediate",
+          "excelRow": 298,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/the-owasp-top-10-for-large-language-model-llm-applications-an-overview"
+        },
+        {
+          "id": "7",
+          "title": "LLM Security: How to Protect Your Generative AI Investments",
+          "duration": "0h 52min",
+          "hours": 0.87,
+          "level": "Intermediate",
+          "excelRow": 9,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/llm-security-how-to-protect-your-generative-ai-investments"
+        },
+        {
+          "id": "8",
+          "title": "Securing the Use of Generative AI in Your Organization",
+          "duration": "1h 15min",
+          "hours": 1.25,
+          "level": "Intermediate",
+          "excelRow": 381,
+          "platform": "LinkedIn Learning",
+          "url": "https://www.linkedin.com/learning/securing-the-use-of-generative-ai-in-your-organization"
+        }
+      ]
+    }
+  ]
+}
