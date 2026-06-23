@@ -1,0 +1,35 @@
+{
+  "year": 2027,
+  "title": { "de": "KI & Cloud Security Lernpfad 2027", "en": "AI & Cloud Security Learning Path 2027" },
+  "subtitle": { "de": "Pflichtschulungen Informationssicherheit – 8 Stunden", "en": "Mandatory Information Security Training – 8 Hours" },
+  "source": "LinkedIn Course List 2027 (Test)",
+  "blocks": [
+    {
+      "id": "block-a",
+      "icon": "☁️",
+      "title": { "de": "Block A – Cloud Security Grundlagen", "en": "Block A – Cloud Security Fundamentals" },
+      "courses": [
+        { "id": "c2027-1", "title": "Cloud Security Foundations", "duration": "1h 30m", "hours": 1.5, "level": "Beginner", "excelRow": 101, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/cloud-security-foundations" },
+        { "id": "c2027-2", "title": "Zero Trust Security Model", "duration": "1h 15m", "hours": 1.25, "level": "Intermediate", "excelRow": 205, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/zero-trust-security" },
+        { "id": "c2027-3", "title": "DevSecOps Foundations", "duration": "1h 20m", "hours": 1.33, "level": "Intermediate", "excelRow": 312, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/devsecops-foundations" }
+      ]
+    },
+    {
+      "id": "block-b",
+      "icon": "🤖",
+      "title": { "de": "Block B – KI-Sicherheit", "en": "Block B – AI Security" },
+      "courses": [
+        { "id": "c2027-4", "title": "Securing AI and Machine Learning Systems", "duration": "1h 45m", "hours": 1.75, "level": "Advanced", "excelRow": 418, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/securing-ai-ml-systems" },
+        { "id": "c2027-5", "title": "Prompt Injection and LLM Security", "duration": "1h 10m", "hours": 1.17, "level": "Advanced", "excelRow": 442, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/prompt-injection-llm-security" }
+      ]
+    },
+    {
+      "id": "block-c",
+      "icon": "🔐",
+      "title": { "de": "Block C – Compliance & Governance", "en": "Block C – Compliance & Governance" },
+      "courses": [
+        { "id": "c2027-6", "title": "NIST Cybersecurity Framework 2.0", "duration": "0h 50m", "hours": 0.83, "level": "Beginner", "excelRow": 510, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/nist-csf-2" }
+      ]
+    }
+  ]
+}
