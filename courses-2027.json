@@ -28,7 +28,7 @@
       "icon": "🔐",
       "title": { "de": "Block C – Compliance & Governance", "en": "Block C – Compliance & Governance" },
       "courses": [
-        { "id": "c2027-6", "title": "NIST Cybersecurity Framework 2.0", "duration": "0h 50m", "hours": 0.83, "level": "Beginner", "excelRow": 510, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/nist-csf-2" }
+        { "id": "c2027-6", "title": "NIST Cybersecurity Framework 2.0", "duration": "1h 00m", "hours": 1.0, "level": "Beginner", "excelRow": 510, "platform": "LinkedIn Learning", "url": "https://www.linkedin.com/learning/nist-csf-2" }
       ]
     }
   ]
