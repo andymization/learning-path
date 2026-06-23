@@ -82,6 +82,7 @@
 <body>
     <div class="page-layout">
         <nav class="year-sidebar" id="yearSidebar">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📅</div>
         </nav>
         <div class="container">
         <h1>🎓 <span id="pageTitle"></span></h1>
@@ -204,9 +205,10 @@
         function renderYearNav() {
             const container = document.getElementById('yearSidebar');
             const sorted = [...availableYears].sort((a, b) => a - b);
-            container.innerHTML = sorted.map(y =>
-                `<div class="year-sidebar-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</div>`
-            ).join('');
+            container.innerHTML = '<div style="font-size:1.5rem;margin-bottom:0.5rem;">📅</div>' +
+                sorted.map(y =>
+                    `<div class="year-sidebar-btn ${y === currentYear ? 'active' : ''}" onclick="switchYear(${y})">${y}</div>`
+                ).join('');
         }
 
         async function switchYear(year) {
