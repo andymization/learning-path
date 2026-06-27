@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -79,9 +79,24 @@
         @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
         .last-update { font-size: 0.75rem; color: #5a7a9f; text-align: center; margin-top: 0.5rem; }
         .legend { text-align: center; margin: 1rem 0; padding: 0.8rem; background: #152238; border-radius: 8px; border: 1px solid #2d4a6f; font-size: 0.8rem; color: #8ab4f8; }
-    </style>
+        #loadingScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s ease; }
+        #loadingScreen.fade-out { opacity: 0; pointer-events: none; }
+        .wk-loader-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .wk-spin { width: 44px; height: 44px; border: 3px solid #2d4a6f; border-top-color: #00c853; border-radius: 50%; animation: wk-spin 0.85s linear infinite; }
+        @keyframes wk-spin { to { transform: rotate(360deg); } }
+        .wk-loader-label { color: #8ab4f8; font-size: 1rem; letter-spacing: 0.05em; }    </style>
 </head>
 <body>
+    <div id="loadingScreen">
+      <div class="wk-loader-wrap">
+        <svg width="110" height="110" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="55" cy="55" r="52" fill="#F5821F"/>
+          <text x="55" y="73" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="42" font-weight="700" fill="#ffffff">WK</text>
+        </svg>
+        <div class="wk-loader-label">Learning Path wird geladen&#8230;</div>
+        <div class="wk-spin"></div>
+      </div>
+    </div>
     <div class="page-wrapper">
         <div class="year-nav pos-top" id="yearNavTop" style="display:none;"></div>
         <div class="container">
@@ -232,7 +247,7 @@
             renderYearNav();
             setStatus(t('loading'), '');
             coursesData = await loadCourses(year);
-            if (!coursesData) { setStatus(`⚠️ courses-${year}.json not found`, 'error'); return; }
+            if (!coursesData) { hideLoader(); setStatus(`⚠️ courses-${year}.json not found`, 'error'); return; }
             currentState = await loadState(year);
             renderCourses();
             applyToDom(currentState);
@@ -495,6 +510,13 @@
         }
 
         // ─── Init ────────────────────────────────────────────────────
+                function hideLoader() {
+            const ls = document.getElementById('loadingScreen');
+            if (!ls) return;
+            ls.classList.add('fade-out');
+            setTimeout(() => ls.remove(), 500);
+        }
+
         (async function init() {
             const savedLang = localStorage.getItem('lernpfad-lang');
             if (savedLang) lang = savedLang;
@@ -513,14 +535,16 @@
             renderYearNav();
 
             coursesData = await loadCourses(currentYear);
-            if (!coursesData) { setStatus(`⚠️ courses-${currentYear}.json not found`, 'error'); return; }
+            if (!coursesData) { hideLoader(); setStatus(`⚠️ courses-${currentYear}.json not found`, 'error'); return; }
 
             currentState = await loadState(currentYear);
             setLang(lang);
 
             if (token) { enableCheckboxes(); setStatus(t('connected'), 'success'); }
             else { disableCheckboxes(); setStatus(t('viewMode', Object.keys(currentState.courses).length, totalCourses), ''); }
+            hideLoader();
         })();
     </script>
 </body>
 </html>
+
